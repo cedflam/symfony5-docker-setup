@@ -1,0 +1,58 @@
+/****** MISE EN PLACE D'UN PROJET SYMFONY AVEC UNE BDD *******/
+
+1) Construire les conteneurs :
+        -> docker-compose up -d --build
+
+2) Lancer un bash PHP:
+        -> docker exec -it php74-container bash
+
+3) Créer le projet:
+        -> composer create-project symfony/website-skeleton project-name
+
+4) Installer les dépendences nécessaires au projet
+        -> composer require dependance-name
+
+5) Controller que l'environnement est ok pour Symfony
+        -> symfony check:req
+
+6) Modifier le fichier . env pour configurer la base de données
+        -> DATABASE_URL=mysql://root:secret@mysql8-service:3306/dbname?serverVersion=8
+
+7) Créer la base de données
+        -> docker-compose run --rm php74-service php bin/console doctrine:database:create
+
+Développez :-)
+
+/**** Dictionnaire git *****/
+
+build       -> changement qui affecte le syteme de build ou des dépendances externes
+ci          -> changement concernant les fichiers et scripts d'intégration ou de configuration
+feat        -> ajout d'une nouvelle fonctionnalité
+perf        -> amélioration des performances
+refactor    -> modification qui n'apporte ni nouvelle fonctionnalité ni d'amélioration de performances
+style       -> changement qui n'apporte aucune altération fonctionnelle ou sémantique (indentation, mise en forme, ajout d'espace, renomante d'une variable)
+docs        -> rédaction ou mise à jour de la documentation
+test        -> ajout ou modification de tests
+
+/**** Méthode ****/
+
+-> Après initialisation de git et du premier push
+
+Créer une branche dev -> git branch dev
+Mettre le code dessus -> git checkout dev
+
+-> A chaque développement de feature ou voir dictionnaire...
+
+//Je déplace le code de la branche dev vers une nouvelle branch feature/foo
+git checkout -b feat/foo dev
+
+-> Après avoir développé la fonctionnalité
+
+//Je me positionne sur la branch de dev
+git checkout dev
+//Je récupère le code de la branch feature/foo sur la branch dev
+git merge feature/foo
+//Je supprime la branch feat/foo
+git branch -d feat/foo
+//Je mets le code à jour sur github
+git push origin dev
